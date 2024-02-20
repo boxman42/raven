@@ -1,2 +1,7 @@
-# raven
-This repo contains all the scripts for the raven chatbot and its corresponding interfaces.
+# Raven RNN ChatBot
+
+## Overview
+
+Raven is a revurent newual network based chad bot. 
+
+## website
