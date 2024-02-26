@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %} Login {% endblock %}
+{%block content %}
+<div class="container">
+    <h1>Raven Chat Login</h1>
+    <p>this is the login page where we steal all your personal information</p>
+    <form action="#" method="post"> <!-- the # means we are going to move to a completely diferent page after signing in-->
+        <div class="d-grid gap-2 justify-content-md-start"> <!-- make a grid of all elements with a 2px space between each item-->    
+            <div class="form-floating"> <!-- neat moving/floating efect of the feild header -->
+                <input type="email" id="email" name="emailAdress" class="form-control" placeholder="example@email.com" required> <!-- this is where we take in the email adress -->
+                <label for="Email" class="form-label">Email</label> <!-- this is the header displaying the name of the input feild -->
+            </div> 
+            <div class="form-floating">
+                <input type="password" id="inputPassword5" name="password" class="form-control" placeholder="password1234" required>
+                <label for="inputPassword5" class="form-label">Password</label>
+            </div>
+            <div class="form-check"> 
+                <input type="checkbox" id="rm" name="Remember me" class="form-check-input">
+                <label for="Account" class="form-check-label">Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+            <button class="btn btn-link">Create account</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
