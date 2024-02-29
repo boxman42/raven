@@ -3,23 +3,34 @@
 {%block content %}
 <div class="container">
     <h1>Raven Chat Login</h1>
-    <p>this is the login page where we steal all your personal information</p>
+    {{ form.hidden_tag() }}
     <form action="#" method="post"> <!-- the # means we are going to move to a completely diferent page after signing in-->
         <div class="d-grid gap-2 justify-content-md-start"> <!-- make a grid of all elements with a 2px space between each item-->    
             <div class="form-floating"> <!-- neat moving/floating efect of the feild header -->
-                <input type="email" id="email" name="emailAdress" class="form-control" placeholder="example@email.com" required> <!-- this is where we take in the email adress -->
+                <input type="email" id="email" name="emailAdress" class="form-control" placeholder="example@email.com"> <!-- this is where we take in the email adress -->
                 <label for="Email" class="form-label">Email</label> <!-- this is the header displaying the name of the input feild -->
+                {{ form.email(id="email" class="form-control" placeholder="example@email.com")}}
+                {{ form.email.label(for="email" class="form-label") }}
             </div> 
             <div class="form-floating">
-                <input type="password" id="inputPassword5" name="password" class="form-control" placeholder="password1234" required>
+                <input type="password" id="inputPassword5" name="password" class="form-control" placeholder="password1234">
                 <label for="inputPassword5" class="form-label">Password</label>
+                {{ form.password(id="password" class="form-control" placeholder="password1234") }}
+                {{ form.password.label(for="password" class="form-label") }}
+
             </div>
             <div class="form-check"> 
                 <input type="checkbox" id="rm" name="Remember me" class="form-check-input">
-                <label for="Account" class="form-check-label">Remember me</label>
+                <label for="rm" class="form-check-label">Remember me</label>
+                {{ form.rememberMe(class="form-check-input") }}
+                {{ form.rememberMe.label(class="form-check-label") }}
             </div>
-            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-            <button class="btn btn-link">Create account</button>
+            <!-- this is the login and create account button. 
+            in python call request.form["submit"] and it will retrun "login" or "createAccount" depending on what button is pressed -->
+            <button type="submit" class="btn btn-primary btn-lg" name="submit" value="login">Submit</button>
+            <button type="submit" class="btn btn-link" name="submit" value="createAccount">Create account</button>
+            {{ form.submit(class="btn btn-primary btn-lg") }}
+            {{ form.createAccount(class="btn btn-link") }}
         </div>
     </form>
 </div>
