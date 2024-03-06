@@ -1,7 +1,36 @@
 {% extends "base.html" %}
-{% block title %} Raven Chat {% endblock %}
 {%block content %}
-<div class="container">
-    <p>this is where the chat bot bit is supposed to be</p>
-</div>
+<!-- python froms -->
+{{ form.csrf_token }}
+{{ form.hidden_tag() }}
+<main class="d-flex flex-nowrap">
+    <!-- side bar -->
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark bottom-0" style="width: 280px; height: 100vh;">
+        <h1>Extra info</h1>
+        <hr>
+        <ul class="nav nav-pills flex-column gap-3 mb-auto">
+            <li class="nav-item">
+                <div class="form-group">
+                    {{ form.chat2.label(for="chat2", class="form-label") }}
+                    {{ form.chat2(id="chat2", class="form-control", placeholder="put text here")}}
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="form-group">
+                    {{ form.chat3.label(for="chat3", class="form-label") }}
+                    {{ form.chat3(id="chat3", class="form-control", placeholder="put text here")}}
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- main body -->
+    <div class="container-fluid">
+        <p>This where the chat will be</p>
+        <div class="form-floating"> <!-- neat moving/floating efect of the feild header -->
+            {{ form.chat1(id="chat1", class="form-control", placeholder="put text here")}}
+            {{ form.chat1.label(for="chat1", class="form-label") }}
+        </div>
+    </div>
+</main>
+
 {% endblock %}

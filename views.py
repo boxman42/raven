@@ -1,41 +1,36 @@
 """
-Notes:
-Inside a Form in an html file, when a post is made(when a submit button is pressed) names and vlues are added to a dictionary.
-The name is the name of the block (i.e. <button class="submit" name="submit" value="login">). The name is used as the key in the dictionary.
-the value is the value associated with that name. when trying to access values from inputs and buttons in an html file, use: request.form["name"]
+This files contains all the routesd to all the web pages.
 """
 from flask import Blueprint, render_template, request, url_for, redirect, session, flash
-from forms import loginForm, createAccountForm
+from forms import loginForm, createAccountForm, chatForm
 
 views = Blueprint("views", import_name=__name__)
 
 @views.route("/")
 def home():
-    return render_template("chat.html")
+    form = chatForm()
+    return render_template("chat.html", title="Home", form=form)
+
+@views.route("/about")
+def about():
+    return render_template("about.html", title="About")
 
 @views.route("/login", methods = ["POST", "GET"])
 def login():
-    # if request.method == "POST": #checks is a post was made (if a submit button was pressed)
-    #     if request.form["submit"] == "login":
-    #         emailAdress = request.form["emailAdress"]
-    #         print(f"email adress: {emailAdress}")
-    #         #need to put in other processing for egtting user ID
-    #         return redirect(url_for("views.user", userID = emailAdress))
-    #     if request.form["submit"] == "createAccount":
-    #         return redirect(url_for("views.createAccount"))
-    # else:
-    #     return render_template("login.html")
     form = loginForm()
+    if form.is_submitted():
+        print(f"user: {form.email.data}, password: {form.password.data}")
+        return redirect(url_for("views.home"))
     return render_template("login.html", title="Login", form=form)
 
 
 @views.route("/login/create_account", methods = ["POST", "GET"])
 def createAccount():
-    if request.method == "POST":
-        emailAdress = request.form["emailAdress"] #get the email adress of the user
-        return redirect(url_for("views.user", userID = emailAdress))
-    else:
-        return render_template("createAccount.html")
+    form = createAccountForm()
+    if form.is_submitted():
+        flash("User created successfuly.", category="info")
+        return redirect(url_for("views.home"))
+    return render_template("createAccount.html", title="Create Accunt", form=form)
 
 @views.route("/user/<userID>")
 def user(userID):
