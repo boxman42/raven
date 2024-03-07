@@ -18,4 +18,4 @@ class userDB(Base):
         self.pfp = pfp
 
     def __repr__(self) -> str:
-        return f"Username: {self.username}, Email: {self.email}"
+        return f"ID: {self.id}, Username: {self.username}, Email: {self.email}"

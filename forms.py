@@ -5,7 +5,7 @@ All feilds require a label. The label is Just the name/string/text associated wi
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, EmailField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-import email_validator
+from dbModels import userDB
 
 class loginForm(FlaskForm):
     email = EmailField(label="Email", validators=[DataRequired(), Email()])
@@ -13,6 +13,11 @@ class loginForm(FlaskForm):
     rememberMe = BooleanField(label="Remember Me")
     submit = SubmitField(label="Sign In")
     createAccount = SubmitField(label="Create Accont")
+    forgotPassword = SubmitField(label="Forgot Password")
+
+    def validate(self, email:str):
+        #this is where login should be validated. curently being done in views.py under helper functions
+        pass
 
 class createAccountForm(FlaskForm):
     userName = StringField(label="Username", validators=[DataRequired(), Length(min=2, max=20)])
@@ -21,7 +26,12 @@ class createAccountForm(FlaskForm):
     passowrdConfirm = PasswordField(label="Confirm Passowrd", validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField(label="Create Account")
 
+    def validate(self, email):
+        #this is whwere new accounts should be validated. it is curently being done in views.py under helper functions
+        pass
+
 class chatForm(FlaskForm):
     chat1 = StringField(label="Message Chat", validators=[DataRequired()]) #the main chat box
-    chat2 = StringField(label="Extra info", validators=[DataRequired()]) #secondary chat box for extra information
-    chat3 = StringField(label="Extra Info", validators=[DataRequired()]) #terterary chat box for extra information
+    chat2 = StringField(label="Knowledge Base") #secondary chat box for extra information
+    chat3 = StringField(label="Instructions") #terterary chat box for extra information
+    submit = SubmitField(label="Enter")
