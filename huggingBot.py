@@ -24,6 +24,14 @@ class huggingBot:
     
     def setInstruction(self, text:str):
         self.instruction = text
+    
+    def setModel(self, modelName:str):
+        """
+        Model should really be passed in on initalization but this is here just in case you want to chnage it post initialization for dome reason.
+        """
+        self.name = modelName
+        self.tokenizer = AutoTokenizer.from_pretrained(modelName)
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(modelName)
 
     def readInUtterance(self, utterance:str):
         """

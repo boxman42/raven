@@ -34,4 +34,5 @@ class chatForm(FlaskForm):
     chat1 = StringField(label="Message Chat", validators=[DataRequired()]) #the main chat box
     chat2 = StringField(label="Knowledge Base") #secondary chat box for extra information
     chat3 = StringField(label="Instructions") #terterary chat box for extra information
+    modelName = StringField(label="Huggingface model name")
     submit = SubmitField(label="Enter")

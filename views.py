@@ -6,13 +6,19 @@ from forms import loginForm, createAccountForm, chatForm
 from database import db_session
 from dbModels import userDB
 from sqlalchemy import Select
+from huggingBot import huggingBot
 
 views = Blueprint("views", import_name=__name__)
 bcrypt = None
+user = None #this user curetnly on the page
+bot = huggingBot() #the active hugging face model
 
-@views.route("/")
+@views.route("/", methods = ["POST", "GET"])
 def home():
     form = chatForm()
+    if form.is_submitted():
+        botResponse = getBotResponse(form.modelName.data, form.chat3.data, form.chat2.data, form.chat1.data)
+        print(botResponse)
     return render_template("chat.html", title="Home", form=form)
 
 @views.route("/about")
@@ -23,7 +29,7 @@ def about():
 def login():
     form = loginForm()
     if form.is_submitted():
-        user = validateUser(form.email.data, form.password.data)
+        user = validateUser(form.email.data, form.password.data) #get the user object from the database
         if user != None:
             return redirect(url_for("views.home"))  
         else:
@@ -45,7 +51,7 @@ def user(userID):
     #add redirect for if user is not logged into session, redirect to log in page
     return render_template("profile.html", userName = userID)
 
-#helper methods
+#helper methods - most of these should be moved to thier respective forms in morms.py
 def validateUser(email:str, password:str) -> userDB:
     """
     chek the userDB for the users email. if it exists, get the users password and comepare it to the inputted passwrod.
@@ -79,3 +85,17 @@ def deleteUser(id:int):
     user = db_session.execute(Select(userDB).filter_by(id=id)).scalar_one() #get the user based on thier id
     db_session.delete(user)
     db_session.commit()
+
+def getBotResponse(modelName:str, instruction:str, knowledge:str, utterance:str) -> str:
+    #set the paramaters
+    #this part realy shouldnt have to be done every time, but i dont have time to make it efficient
+    bot.setModel(modelName)
+    bot.setKnowledgeBase(knowledge)
+    bot.setInstruction(instruction)
+    #handel what the user has said
+    bot.readInUtterance(utterance)
+    return bot.generateResponse()
+
+
+
+
