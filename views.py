@@ -12,12 +12,15 @@ views = Blueprint("views", import_name=__name__)
 bcrypt = None
 user = None #this user curetnly on the page
 bot = huggingBot() #the active hugging face model
+chatMessages = []
 
 @views.route("/", methods = ["POST", "GET"])
 def home():
     form = chatForm()
     if form.is_submitted():
+        chatMessages.append(f"User: {form.chat1.data}") #need ot add username from user database
         botResponse = getBotResponse(form.modelName.data, form.chat3.data, form.chat2.data, form.chat1.data)
+        chatMessages.append(f"Raven : {botResponse}")
     return render_template("chat.html", title="Home", chatMessages=chatMessages, form=form)
 
 @views.route("/about")
@@ -88,14 +91,13 @@ def deleteUser(id:int):
 def getBotResponse(modelName:str, instruction:str, knowledge:str, utterance:str) -> str:
     #set the paramaters
     #this part realy shouldnt have to be done every time, but i dont have time to make it efficient
-    print(f"new info:\nmodel name: {modelName},\ninstructions: {instruction},\nknowledge: {knowledge}, \nutterance: {utterance}")
     if modelName != None: #this is done so the feild are only updated when information is passed in
         bot.setModel(modelName)
     if knowledge != None:
         bot.setKnowledgeBase(knowledge)
     if instruction != None:
         bot.setInstruction(instruction)
-    bot.readInUtterance(f"{user.username}: {utterance}")
+    bot.readInUtterance(utterance)
     return bot.generateResponse()
 
 

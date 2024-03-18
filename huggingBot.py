@@ -19,6 +19,9 @@ class huggingBot:
         self.knowledgeBase = "" #background information for the lm to use
         self.instruction = "Instruction: given a dialog context, you need to response empathically." #you have to tell the lm to be nice
     
+    def __repr__(self) -> str:
+        return f"new info:\nmodel name: {self.model},\ninstructions: {self.instruction},\nknowledge: {self.knowledgeBase}"
+
     def setKnowledgeBase(self, text:str):
         self.knowledgeBase = text
     
@@ -46,9 +49,8 @@ class huggingBot:
         self.chatHistory.append(utterance)
     
     def generateResponse(self) -> str:
-        knowledge = '[KNOWLEDGE] ' + self.knowledgeBase
         dialog = ' EOS '.join(self.chatHistory) #convert dialog into a string where each element is seperated by EOS
-        query = f"{self.instruction} [CONTEXT] {dialog}. {knowledge}"
+        query = f"{self.instruction} [CONTEXT] {dialog}. [KNOWLEDGE] {self.knowledgeBase}"
         #print(f"Godel query:{query}")
         input_ids = self.tokenizer(f"{query}", return_tensors="pt").input_ids
         tokenResponse = self.model.generate(input_ids, max_length=128, min_length=10, top_p=0.9, do_sample=True) #(tokenized version of our information, max number of words in output text, min number of words in output text)

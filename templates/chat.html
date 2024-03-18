@@ -3,6 +3,15 @@
 <!-- python froms -->
 {{ form.csrf_token }}
 {{ form.hidden_tag() }}
+<style>
+    /* Custom CSS to anchor container to the bottom */
+    .bottom-anchored {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 20px; /* Optional: Add padding */
+    }
+  </style>
 <form action="#" method="post">
     <main class="d-flex flex-nowrap">
         <!-- side bar -->
@@ -25,24 +34,26 @@
             </ul>
         </div>
         <!-- main body -->
-        <div class="container-fluid">
+        <div class="container">
             <!-- this is where the chat messages apear -->
-            <p>
-                {% for message in chatMessages %}
-                    <p>
-                        {{ message}}
-                    </p>
-                {% endfor %}
-            </p>
+            <div class="container-fluid">
+                <p>
+                    {% for message in chatMessages %}
+                        <p>
+                            {{ message}}
+                        </p>
+                    {% endfor %}
+                </p>
+            </div>
             <!-- this the main chat box -->
-            <div class="form-group">
+            <div class="bottom-anchored">
                 <div class="form-floating">
                     {{ form.chat1(id="chat1", class="form-control", placeholder="put text here")}}
                     {{ form.chat1.label(for="chat1", class="form-label") }}
                     {{ form.submit(for="chat1", class="btn btn-primary btn-lg") }}
                 </div>
             </div>
-        </div>
+        </div> 
     </main>
 </form>
 
