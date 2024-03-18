@@ -13,6 +13,7 @@ bcrypt = None
 user = None #this user curetnly on the page
 bot = huggingBot() #the active hugging face model
 
+
 @views.route("/", methods = ["POST", "GET"])
 def home():
     form = chatForm()
