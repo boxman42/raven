@@ -1,3 +1,24 @@
+h1 {
+    font-family: 'Inter', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #838383; /* Set the background color of the whole site */
+    color: white; /* Set the text color to white */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+}
+
+h1 {
+    text-align: center;
+    margin: 0;
+    font-size: 56px;
+}
+
 /* Add styles for multiple-choice options */
 #chatbox ul {
     list-style-type: none;

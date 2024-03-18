@@ -2,8 +2,8 @@
 This is a general framework for the godel text generation model. 
 Initalize the bot with a godel model from https://huggingface.co/.
 By default, the bot uses facebook/blenderbot-400M-distill. alternative model: facebook/blenderbot-3B
-Use readInUtterances() to add to the conversation this isd done to keep context in the chatbot.
-Use generateresponse() to generater a resonse to the last message
+Use readInUtterances() to add to the conversation. this is done to keep context in the chatbot.
+Use generateresponse() to generater a resonse to the latest message.
 """
 
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
@@ -40,8 +40,9 @@ class huggingBot:
         if the number of tokens (chatHistotyLength) exceeds 500, we remove the first utterance of the chat history as it is unlikely it is still relevent. 
         """
         self.chatHistoryLength += len(utterance.strip().split()) #numer of words (aprox num of tokens)
-        if self.chatHistoryLength >= self.maxTokens: 
-            self.chatHistory = self.chatHistory[1:]
+        if self.chatHistoryLength >= self.maxTokens:
+            self.chatHistoryLength -= len(self.chatHistory[0].split()) #subtract the length of the first elemnt from the chat count
+            self.chatHistory = self.chatHistory[1:] #remove the first utterance from the list
         self.chatHistory.append(utterance)
     
     def generateResponse(self) -> str:
@@ -51,4 +52,6 @@ class huggingBot:
         #print(f"Godel query:{query}")
         input_ids = self.tokenizer(f"{query}", return_tensors="pt").input_ids
         tokenResponse = self.model.generate(input_ids, max_length=128, min_length=10, top_p=0.9, do_sample=True) #(tokenized version of our information, max number of words in output text, min number of words in output text)
-        return self.tokenizer.decode(tokenResponse[0], skip_special_tokens=True)
+        response = self.tokenizer.decode(tokenResponse[0], skip_special_tokens=True)
+        self.readInUtterance(response) #this is done so the model knows the last thing it said.
+        return response
