@@ -1,29 +1,32 @@
 {% extends "base.html" %}
 {%block content %}
-<div class="container">
-    <h1>Raven Chat Login</h1>
-    {{ form.csrf_token }}
-    {{ form.hidden_tag() }}
-    <form action="#" method="post"> <!-- the # means we are going to move to a completely diferent page after signing in-->
-        <div class="d-grid gap-2 justify-content-md-start"> <!-- make a grid of all elements with a 2px space between each item-->    
-            <div class="form-floating"> <!-- neat moving/floating efect of the feild header -->
-                {{ form.email(id="email", class="form-control", placeholder="example@email.com")}}
-                {{ form.email.label(for="email", class="form-label") }}
-            </div> 
-            <div class="form-floating">
-                {{ form.password(id="password", class="form-control", placeholder="password1234") }}
-                {{ form.password.label(for="password", class="form-label") }}
-
+<div class="main-content">
+    <div class="message-container">
+        <h1>Raven Chat Login</h1>
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+        <form action="#" method="post"> <!-- the # means we are going to move to a completely diferent page after signing in-->
+            <div class="d-grid gap-2 justify-content-md-start"> <!-- make a grid of all elements with a 2px space between each item-->    
+                <div class="form-floating"> <!-- neat moving/floating efect of the feild header -->
+                    {{ form.email(id="email", class="form-control", placeholder="example@email.com")}}
+                    {{ form.email.label(for="email", class="form-label") }}
+                </div> 
+                <div class="form-floating">
+                    {{ form.password(id="password", class="form-control", placeholder="password1234") }}
+                    {{ form.password.label(for="password", class="form-label") }}
+    
+                </div>
+                <div class="form-check"> 
+                    {{ form.rememberMe(class="form-check-input") }}
+                    {{ form.rememberMe.label(class="form-check-label") }}
+                </div>
+                {{ form.submit(class="btn btn-primary btn-lg") }}
+                <button type="submit" class="btn btn-link" name="submit" value="createAccount">
+                    <a href="{{ url_for('views.createAccount')}}">Create Account</a>
+                </button>
             </div>
-            <div class="form-check"> 
-                {{ form.rememberMe(class="form-check-input") }}
-                {{ form.rememberMe.label(class="form-check-label") }}
-            </div>
-            {{ form.submit(class="btn btn-primary btn-lg") }}
-            <button type="submit" class="btn btn-link" name="submit" value="createAccount">
-                <a href="{{ url_for('views.createAccount')}}">Create Account</a>
-            </button>
-        </div>
-    </form>
+        </form>
+    </div>
+    
 </div>
 {% endblock %}

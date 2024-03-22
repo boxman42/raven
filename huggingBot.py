@@ -10,6 +10,7 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 class huggingBot:
     def __init__(self, modelName:str="microsoft/GODEL-v1_1-base-seq2seq", maxTokens:int=500) -> None:
+        print(f"mdoel: {modelName} initalizing")
         self.name = modelName
         self.tokenizer = AutoTokenizer.from_pretrained(modelName)
         self.model = AutoModelForSeq2SeqLM.from_pretrained(modelName)

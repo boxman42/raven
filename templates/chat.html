@@ -3,59 +3,46 @@
 <!-- python froms -->
 {{ form.csrf_token }}
 {{ form.hidden_tag() }}
-<style>
-    /* Custom CSS to anchor container to the bottom */
-    .bottom-anchored {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      padding: 20px; /* Optional: Add padding */
-    }
-  </style>
+
+<body>
 <form action="#" method="post">
-    <main class="d-flex flex-nowrap">
-        <!-- side bar -->
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark bottom-0" style="width: 280px; height: 100vh;">
-            <h1>Extra info</h1>
-            <hr>
-            <ul class="nav nav-pills flex-column gap-3 mb-auto">
-                <li class="nav-item">
-                    <div class="form-group">
-                        {{ form.chat2.label(for="chat2", class="form-label") }}
-                        {{ form.chat2(id="chat2", class="form-control", placeholder="put text here")}}
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="form-group">
-                        {{ form.chat3.label(for="chat3", class="form-label") }}
-                        {{ form.chat3(id="chat3", class="form-control", placeholder="put text here")}}
-                    </div>
-                </li>
-            </ul>
+  <div class="sidebar">
+    <h2>Sidebar</h2>
+    <hr>
+    <div class="input-container">
+      <div class="form-group">
+        {{ form.chat2.label(for="chat2", class="form-label") }}
+        {{ form.chat2(id="chat2", class="form-control", placeholder="put text here")}}
+      </div>
+    </div>
+    <div class="input-container">
+      <div class="form-group">
+        {{ form.chat3.label(for="chat3", class="form-label") }}
+        {{ form.chat3(id="chat3", class="form-control", placeholder="put text here")}}
+      </div>
+    </div>
+  </div>
+  <div class="main-content">
+    <!-- this is where the chat messages apear -->
+    <div class="message-container">
+      <p>
+          {% for message in chatMessages %}
+              <p>
+                  {{ message}}
+              </p>
+          {% endfor %}
+      </p>
+    </div>
+    <div class="bottom-positioned">
+        <div class="input-container">
+            <div class="form-floating">
+                {{ form.chat1(id="chat1", class="form-control", placeholder="put text here")}}
+                {{ form.chat1.label(for="chat1", class="form-label") }}
+            </div>
+            {{ form.submit(for="chat1", class="btn btn-primary btn-lg") }}
         </div>
-        <!-- main body -->
-        <div class="container">
-            <!-- this is where the chat messages apear -->
-            <div class="container-fluid">
-                <p>
-                    {% for message in chatMessages %}
-                        <p>
-                            {{ message}}
-                        </p>
-                    {% endfor %}
-                </p>
-            </div>
-            <!-- this the main chat box -->
-            <div class="bottom-anchored">
-                <div class="form-floating">
-                    {{ form.chat1(id="chat1", class="form-control", placeholder="put text here")}}
-                    {{ form.chat1.label(for="chat1", class="form-label") }}
-                    {{ form.submit(for="chat1", class="btn btn-primary btn-lg") }}
-                </div>
-            </div>
-        </div> 
-    </main>
+    </div>
+  </div>
 </form>
-
-
+</body>
 {% endblock %}

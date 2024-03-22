@@ -5,7 +5,6 @@ All feilds require a label. The label is Just the name/string/text associated wi
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, EmailField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
-from dbModels import userDB
 
 class loginForm(FlaskForm):
     email = EmailField(label="Email", validators=[DataRequired(), Email()])

@@ -1,14 +1,42 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
+"""
+The is the database for the raven chatbot website. to use:
+import database
+add new user: 
+expUser = db.userDB(1, "Test", "test@email.com", "password")
+db.session.add(expUser)
+db.session.commit()
+"""
 
-engine = create_engine('sqlite:////tmp/test.db')
-db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+#imports
+from sqlalchemy import create_engine, ForeignKey, Column, String, Integer, CHAR
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+#setup
 Base = declarative_base()
-Base.query = db_session.query_property()
 
-def init_db():
-    # import all modules here that might define models so that
-    # they will be registered properly on the metadata.  Otherwise
-    # you will have to import them first before calling init_db()
-    import dbModels
-    Base.metadata.create_all(bind=engine)
+#database models
+class userDB(Base):
+    __tablename__ = 'users'
+    id = Column(name="id",  type_=Integer, primary_key=True)
+    username = Column(type_=String(20), unique=False, nullable=False)
+    email = Column(type_=String, unique=True, nullable=False)
+    password = Column(type_=String(60), unique=False, nullable=False)
+    pfp = Column(type_=String(20), unique=False, nullable=False) #profile picture
+
+    def __init__(self, id:int=0, username:str="test", email:str="test@email.com", password:str="password1234", pfp:str="pfp.jpg"):
+        self.id = id
+        self.username = username
+        self.email = email
+        self.password = password
+        self.pfp = pfp
+
+    def __repr__(self) -> str:
+        return f"ID: {self.id}, Username: {self.username}, Email: {self.email}"
+    
+
+#post setup
+engine = create_engine("sqlite:///raven.db", echo=True)
+Base.metadata.create_all(bind=engine)
+Session = sessionmaker(bind=engine)
+session = Session()
