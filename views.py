@@ -8,7 +8,7 @@ from sqlalchemy import Select
 from huggingBot import huggingBot #custom hugging face api
 
 views = Blueprint("views", import_name=__name__)
-bcrypt = None
+bcrypt = None #this has to be set by app.by to pass the encryption key
 user = None #this user curetnly on the page
 bot = huggingBot() #the active hugging face model
 chatMessages = []

@@ -29,6 +29,10 @@ class createAccountForm(FlaskForm):
         #this is whwere new accounts should be validated. it is curently being done in views.py under helper functions
         pass
 
+class profileForm(FlaskForm):
+    knowledge = StringField(label="knowledge")
+    instruction = StringField(label="instruction")
+
 class chatForm(FlaskForm):
     chat1 = StringField(label="Message Chat", validators=[DataRequired()]) #the main chat box
     chat2 = StringField(label="Knowledge Base") #secondary chat box for extra information

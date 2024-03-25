@@ -13,9 +13,9 @@ body {
     padding: 20px;
 }
 .main-content {
-    top: 60px; /* allows space fo rthe nac bar*/
+    top: 60px; /* allows space fo rthe nav bar*/
     padding: 20px;
-    margin-left: 280px; /* Matches the sidebar width */
+    margin-left: 140px; /* Matches the sidebar width */
 }
 .input-container {
     display: flex; /* Arranges elements horizontally */
@@ -38,6 +38,7 @@ body {
     top: 60px;
     bottom: 40px;
     height: 100vh;
+    margin-left: 280px;
 }
 input[type="text"],input[type="button"] {
     padding: 10px;

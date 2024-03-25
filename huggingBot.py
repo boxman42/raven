@@ -51,7 +51,7 @@ class huggingBot:
     
     def generateResponse(self) -> str:
         dialog = ' EOS '.join(self.chatHistory) #convert dialog into a string where each element is seperated by EOS
-        query = f"{self.instruction} [CONTEXT] {dialog}. [KNOWLEDGE] {self.knowledgeBase}"
+        query = f"{self.instruction} [CONTEXT] {dialog} [KNOWLEDGE]{self.knowledgeBase}"
         #print(f"Godel query:{query}")
         input_ids = self.tokenizer(f"{query}", return_tensors="pt").input_ids
         tokenResponse = self.model.generate(input_ids, max_length=128, min_length=10, top_p=0.9, do_sample=True) #(tokenized version of our information, max number of words in output text, min number of words in output text)
