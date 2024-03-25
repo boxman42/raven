@@ -24,11 +24,11 @@ def home():
         botResponse = getBotResponse(form.modelName.data, form.chat3.data, form.chat2.data, username + form.chat1.data)
         chatMessages.append(f"Raven : {botResponse}")
         return redirect(url_for("views.home"))
-    return render_template("chat.html", title="Home", chatMessages=chatMessages, form=form)
+    return render_template("chat.html", title="Home", chatMessages=chatMessages, form=form, user=user)
 
 @views.route("/about")
 def about():
-    return render_template("about.html", title="About")
+    return render_template("about.html", title="About", user=user)
 
 @views.route("/login", methods = ["POST", "GET"])
 def login():
@@ -40,8 +40,14 @@ def login():
             return redirect(url_for("views.home"))  
         else:
             flash("Bad credentials", category="danger")
-            return render_template("login.html", title="Login", form=form)    
-    return render_template("login.html", title="Login", form=form)
+            return render_template("login.html", title="Login", form=form, user=user)    
+    return render_template("login.html", title="Login", form=form, user=user)
+
+@views.route("/logout")
+def logout():
+    global user
+    user = None
+    return redirect(url_for("views.home"))
 
 @views.route("/login/create_account", methods = ["POST", "GET"])
 def createAccount():
@@ -49,17 +55,17 @@ def createAccount():
     if form.is_submitted():
         createUser(form.userName.data, form.email.data, form.password.data)
         return redirect(url_for("views.home"))
-    return render_template("createAccount.html", title="Create Accunt", form=form)
+    return render_template("createAccount.html", title="Create Accunt", form=form, user=user)
 
 @views.route("/profile/<userID>")
 def profile(userID):
     #add redirect for if user is not logged into session, redirect to log in page
-    return render_template("profile.html", userName = userID)
+    return render_template("profile.html", userID = userID, user = user)
 
 @views.route("/staging", methods=["POST", "GET"])
 def staging(): #this page is used for tecting new templates
     form = chatForm()
-    return render_template("testing.html", title="Staging", form=form)
+    return render_template("testing.html", title="Staging", form=form, user=user)
 
 #helper methods - most of these should be moved to thier respective forms in morms.py
 def validateUser(email:str, password:str) -> db.userDB:
