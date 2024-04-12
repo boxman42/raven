@@ -15,7 +15,6 @@ body {
 .main-content {
     top: 60px; /* allows space fo rthe nav bar*/
     padding: 20px;
-    margin-left: 140px; /* Matches the sidebar width */
 }
 .input-container {
     display: flex; /* Arranges elements horizontally */

@@ -32,6 +32,7 @@ class createAccountForm(FlaskForm):
 class profileForm(FlaskForm):
     knowledge = StringField(label="knowledge")
     instruction = StringField(label="instruction")
+    submit = SubmitField(label="Add Info")
 
 class chatForm(FlaskForm):
     chat1 = StringField(label="Message Chat", validators=[DataRequired()]) #the main chat box

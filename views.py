@@ -20,9 +20,10 @@ def home():
     if user != None:
         username = user.username #if there as an active user, set the user name to that their name
     if form.is_submitted():
+        addDataToUser(form.chat2.data, form.chat3.data)
         chatMessages.append(f"{username}: {form.chat1.data}") #need ot add username from user database
         botResponse = getBotResponse(form.modelName.data, form.chat3.data, form.chat2.data, username + form.chat1.data)
-        chatMessages.append(f"Raven : {botResponse}")
+        chatMessages.append(f"Ravnn : {botResponse}")
         return redirect(url_for("views.home"))
     return render_template("chat.html", title="Home", chatMessages=chatMessages, form=form, user=user)
 
@@ -94,6 +95,7 @@ def createUser(username:str, email:str, password:str):
         user = db.session.execute(Select(db.userDB).filter_by(email=email)).scalar_one() #this will throw an error is the email does not exist in the database
         print("user already exists")
         flash("user already created: email already associated with account.")
+        return redirect(url_for('views.createAccount'))
     except:#create and add new user
         #pw_hash = bcrypt.generate_password_hash(password).decode("utf-8") #incrept the password then convert it to utf-8 string
         id = db.session.query(db.userDB).count() + 1 #the id of the new user is number of curent users +1
@@ -121,6 +123,9 @@ def getBotResponse(modelName:str, instruction:str, knowledge:str, utterance:str)
     bot.readInUtterance(utterance)
     return bot.generateResponse()
 
-
+def addDataToUser(knowledeg, instruction):
+    if user != None and knowledeg != None and instruction != None: #make sure there is actualy data to pass into the database
+        user.knowledge += knowledeg
+        user.instruction = instruction
 
 
