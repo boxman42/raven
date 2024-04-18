@@ -1,7 +1,7 @@
 """
-This is a general framework for the godel text generation model. 
+This is a general framework for a hugging face text generation model. 
 Initalize the bot with a godel model from https://huggingface.co/.
-By default, the bot uses facebook/blenderbot-400M-distill. alternative model: facebook/blenderbot-3B
+By default, the bot uses microsoft/GODEL-v1_1-base-seq2seq. alternative model: facebook/blenderbot-3B, mistral-community/Mixtral-8x22B-v0.1
 Use readInUtterances() to add to the conversation. this is done to keep context in the chatbot.
 Use generateresponse() to generater a resonse to the latest message.
 """

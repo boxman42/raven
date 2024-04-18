@@ -22,7 +22,7 @@ class createAccountForm(FlaskForm):
     userName = StringField(label="Username", validators=[DataRequired(), Length(min=2, max=20)])
     email = EmailField(label="Email", validators=[DataRequired(), Email()])
     password = PasswordField(label="Password", validators=[DataRequired()])
-    passowrdConfirm = PasswordField(label="Confirm Passowrd", validators=[DataRequired(), EqualTo("password")])
+    passowrdConfirm = PasswordField(label="Confirm Password", validators=[DataRequired(), EqualTo("password")])
     submit = SubmitField(label="Create Account")
 
     def validate(self, email):
